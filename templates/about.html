@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About</title>
+</head>
+<body>
+    <h3>Вы може прийти в один из наших учебных центров по адресу:</h3>
+    <ul>
+        {% for address in object_list %}
+            <li>{{address}}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
