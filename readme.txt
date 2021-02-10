@@ -1,5 +1,5 @@
 Запуск приложения:
-gunicorn master:app
+gunicorn main:app
 
 Через браузер заходим:
 127.0.0.1:8000
