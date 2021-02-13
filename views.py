@@ -13,5 +13,17 @@ def get_about_view(request):
     return '200 OK', render('about.html', object_list=adresses)
 
 
-def spam(request):
-    return '200 OK', 'Это на самом деле спам!'
+def get_contact_view(request):
+    if request['method'] == 'POST':
+        data = request['data']
+        title = data['title']
+        text = data['text']
+        email = data['email']
+        print(
+            f'++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n'
+            f'Поступило сообщение от {email}:\n'
+            f'Тема: {title}\n'
+            f'Текст: {text}\n'
+            f'++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+        return '200 OK', render('contact.html')
+    return '200 OK', render('contact.html')
