@@ -1,7 +1,7 @@
-from views import get_index_view, get_about_view, spam
+from views import get_index_view, get_about_view, get_contact_view
 
 routes = {
     '/': get_index_view,
     '/about/': get_about_view,
-    '/spam/': spam
+    '/contact/': get_contact_view
     }
