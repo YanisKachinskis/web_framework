@@ -1,0 +1,13 @@
+
+<h3>Меню:</h3>
+<ul>
+    {% for link in links_menu %}
+    <li>
+        <a href={{link.href}}>
+            {{link.name}}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+<hr>
+
