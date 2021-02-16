@@ -1,15 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>About</title>
-</head>
-<body>
-    <h3>Вы може прийти в один из наших учебных центров по адресу:</h3>
+{% extends "base.html" %}
+{% block title %}
+О нас
+{% endblock %}
+{% block body %}
+{% include "inc-menu.html" %}
+    <h3>Вы може обратиться в один из наших учебных центров по адресу:</h3>
     <ul>
-        {% for address in object_list %}
+        {% for address in objects_list %}
             <li>{{address}}</li>
         {% endfor %}
     </ul>
-</body>
-</html>
+{% endblock %}
