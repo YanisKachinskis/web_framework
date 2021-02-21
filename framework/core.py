@@ -75,7 +75,8 @@ class App:
                 result[key] = value
         return result
 
-    def decode_value(self, val):
+    @staticmethod
+    def decode_value(val):
         val_in_bytes = bytes(val.replace('%', '=').replace("+", " "), 'utf-8')
         val_decode_str = quopri.decodestring(val_in_bytes)
         return val_decode_str.decode('utf-8')

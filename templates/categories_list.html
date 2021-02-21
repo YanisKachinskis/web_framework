@@ -4,11 +4,11 @@
 {% endblock %}
 {% block body %}
 {% include "inc-menu.html" %}
-<h3>Список курсов</h3>
+<h3>Список категорий</h3>
 <ul>
     {% for item in objects_list %}
     <li>
-        {{item.name}} <span><a href="/copy-course/?name={{item.name}}">скопировать</a></span>
+        {{item.id}} - {{item.name}} <span>Количество курсов: {{item.course_count()}}</span>
     </li>
     {% endfor %}
 </ul>

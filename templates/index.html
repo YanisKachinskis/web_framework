@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Index</title>
-</head>
-<body>
-    <h1>Школа английского языка.</h1>
-    <h3>Ваш порядковый номер: {{token}}</h3>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}
+Список курсов
+{% endblock %}
+{% block body %}
+{% include "inc-menu.html" %}
+<h3>Добро пожаловать на сайт языковых курсов для любого уровня подготовки.</h3>
+<p>Наш подход к обучению и ваше желание научиться - залог успеха!</p>
+{% endblock %}
