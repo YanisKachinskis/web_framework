@@ -46,6 +46,11 @@ class App:
             start_response('400 NOT FOUND', [('Content-Type', 'text/html')])
             return [b'<h3>404 Page not found!</h3>']
 
+    def add_route(self, url):
+        def inner(view):
+            self.routes[url] = view
+        return inner
+
     def get_input_data(self, environ):
         content_length = int(environ.get('CONTENT_LENGTH')) if environ.get(
             'CONTENT_LENGTH') else 0
@@ -82,4 +87,16 @@ class App:
         val_in_bytes = bytes(val.replace('%', '=').replace("+", " "), 'utf-8')
         val_decode_str = quopri.decodestring(val_in_bytes)
         return val_decode_str.decode('utf-8')
+
+
+class FakeApp(App):
+
+    def __init__(self, routes, front_controllers):
+        self.routes = routes
+        self.front_controllers = front_controllers
+        super().__init__(routes, front_controllers)
+
+    def __call__(self, environ, start_response):
+        start_response('200 OK', [('Content-Type', 'text/html')])
+        return [b'Page have been faked!']
 
