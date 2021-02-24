@@ -4,7 +4,7 @@ from logger import Logger
 from models import TrainingSite
 
 site = TrainingSite()
-logger = Logger('view.py')
+logger = Logger('views.py')
 
 
 def get_index_view(request):

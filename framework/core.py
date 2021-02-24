@@ -1,4 +1,5 @@
 import quopri
+from wsgiref.util import setup_testing_defaults
 
 
 class App:
@@ -15,6 +16,7 @@ class App:
 
     def __call__(self, environ, start_response):
 
+        setup_testing_defaults(environ)
         path = environ['PATH_INFO']
         print(f'Loading page: {path}')
 
