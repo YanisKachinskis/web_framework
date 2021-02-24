@@ -2,17 +2,20 @@ from framework.core import App
 from framework.templates import render
 from logger import Logger
 from models import TrainingSite
+from logger import debug
 
 site = TrainingSite()
 logger = Logger('views.py')
 
 
+@debug
 def get_index_view(request):
     logger.log('Получаем главную страницу')
     links_menu = request.get('links_menu')
     return '200 OK', render('index.html', links_menu=links_menu)
 
 
+@debug
 def get_courses_view(request):
     logger.log('Получаем список курсов')
     links_menu = request.get('links_menu')
@@ -75,15 +78,6 @@ def copy_course(request):
         new_course.name = new_name
         site.courses.append(new_course)
     return '200 OK', render('course_list.html', objects_list=site.courses,
-                            links_menu=links_menu)
-
-
-def get_about_view(request):
-    addresses = ['Москва, ул. Ударная, 13',
-                 'Санкт-Петербург, ул. Моховая, 23',
-                 'Казань, пр. Мира, 10']
-    links_menu = request.get('links_menu')
-    return '200 OK', render('about.html', objects_list=addresses,
                             links_menu=links_menu)
 
 

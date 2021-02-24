@@ -3,6 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
+    <style>
+    ul#menu li{
+        display:inline-block; /* расположить пункты горизонтально */
+        text-align: center; /* текст горизонтально по центру */
+    }
+    #menu a {
+        display: block; /* ссылка растягивается на весь пункт li */
+        padding: 5px 15px; /* задаем внутренние отступы */
+        text-decoration: none; /* убрать нижнее подчёркивание у ссылок */
+    }
+</style>
 </head>
 <body>
 {% block body %}
