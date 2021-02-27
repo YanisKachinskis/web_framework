@@ -1,9 +1,12 @@
+from patterns.observer import Subject, Observer
 from patterns.prototypes import PrototypeMixin
+import jsonpickle
 
 
 # абстрактный пользователь
 class User:
-    pass
+    def __init__(self, name):
+        self.name = name
 
 
 # преподаватель
@@ -13,7 +16,21 @@ class Teacher(User):
 
 # студент
 class Student(User):
-    pass
+
+    def __init__(self, name):
+        super().__init__(name)
+        self.courses = []
+
+
+class UserFactory:
+    types = {
+        'student': Student,
+        'teacher': Teacher
+    }
+
+    @classmethod
+    def create(cls, type_, name):
+        return cls.types[type_](name)
 
 
 class Category:
@@ -33,12 +50,48 @@ class Category:
         return result
 
 
-class Course(PrototypeMixin):
+class Course(PrototypeMixin, Subject):
 
     def __init__(self, name, category):
         self.name = name
         self.category = category
         self.category.courses.append(self)
+        self.students = []
+        super().__init__()
+
+    def __getitem__(self, item):
+        return self.students[item]
+
+    def add_student(self, student: Student):
+        self.students.append(student)
+        student.courses.append(self)
+        self.notify()
+
+
+class SmsNotifier(Observer):
+
+    def update(self, subject: Course):
+        print('SMS->', f'к курсу {subject.name} присоединился',
+              subject.students[-1].name)
+
+
+class EmailNotifier(Observer):
+
+    def update(self, subject: Course):
+        print(('EMAIL->', f'к курсу {subject.name} присоединился',
+               subject.students[-1].name))
+
+
+class Serializer:
+
+    def __init__(self, obj):
+        self.obj = obj
+
+    def save(self):
+        return jsonpickle.dumps(self.obj)
+
+    def load(self, data):
+        return jsonpickle.loads(data)
 
 
 # Интерактивный курс
@@ -71,6 +124,10 @@ class TrainingSite:
         self.categories = []
 
     @staticmethod
+    def create_user(type_, name):
+        return UserFactory.create(type_, name)
+
+    @staticmethod
     def create_category(name, category=None):
         return Category(name, category)
 
@@ -88,4 +145,8 @@ class TrainingSite:
         for item in self.courses:
             if item.name == name:
                 return item
-        return None
+
+    def get_student(self, name) -> Student:
+        for item in self.students:
+            if item.name == name:
+                return item

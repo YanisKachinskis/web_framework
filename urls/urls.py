@@ -1,15 +1,19 @@
 from views import get_index_view, get_contact_view, \
-    get_courses_view, get_category_view, create_category, create_course, \
-    copy_course
+    create_course, copy_course, CategoryCreateView, CategoryListView, \
+    CoursesListView, StudentCreateView, StudentListView, \
+    AddStudentInCourseCreateView, course_api
 
 routes = {
     '/': get_index_view,
-    '/course-list/': get_courses_view,
+    '/course-list/': CoursesListView(),
     '/create-course/': create_course,
-    '/category-list/': get_category_view,
-    '/create-category/': create_category,
+    '/category-list/': CategoryListView(),
+    '/create-category/': CategoryCreateView(),
+    '/create-student/': StudentCreateView(),
+    '/students-list/': StudentListView(),
+    '/add-student/': AddStudentInCourseCreateView(),
     '/copy-course/': copy_course,
-    # '/about/': get_about_view,
-    '/contact/': get_contact_view
+    '/contact/': get_contact_view,
+    '/api/': course_api,
     }
 
