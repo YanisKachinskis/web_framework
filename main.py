@@ -5,7 +5,7 @@ from urls.urls import routes
 from framework.front_controllers import front_controllers
 from wsgiref.simple_server import make_server
 
-logger = Logger('main.py')
+logger = Logger('main')
 
 logger.log('Запускаем приложение')
 app = App(routes, front_controllers)

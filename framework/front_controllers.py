@@ -12,6 +12,9 @@ def get_menu(request):
         {'href': '/create-course/', 'name': 'Создать курс'},
         {'href': '/create-category/', 'name': 'Создать категорию'},
         {'href': '/category-list/', 'name': 'Список категорий'},
+        {'href': '/create-student/', 'name': 'Создать студента'},
+        {'href': '/students-list/', 'name': 'Список студентов'},
+        {'href': '/add-student/', 'name': 'Добавить студента на курс'},
         {'href': '/contact/', 'name': 'Написать нам'},
         {'href': '/about/', 'name': 'О нас'},
     ]
