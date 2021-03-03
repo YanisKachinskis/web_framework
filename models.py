@@ -1,3 +1,4 @@
+from orm.unitofwork import DomainObject
 from patterns.observer import Subject, Observer
 from patterns.prototypes import PrototypeMixin
 import jsonpickle
@@ -15,7 +16,7 @@ class Teacher(User):
 
 
 # студент
-class Student(User):
+class Student(User, DomainObject):
 
     def __init__(self, name):
         super().__init__(name)

@@ -2,13 +2,17 @@ from framework.cbv import CreateView, ListView
 from framework.core import App
 from framework.templates import render
 from logger import Logger
+from mappers import MapperRegistry
 from models import TrainingSite, EmailNotifier, SmsNotifier, Serializer
 from logger import debug
+from orm.unitofwork import UnitOfWork
 
 site = TrainingSite()
 logger = Logger('views')
 email_notifier = EmailNotifier()
 sms_notifier = SmsNotifier()
+UnitOfWork.new_current()
+UnitOfWork.get_current().set_mapper_registry(MapperRegistry)
 
 
 @debug
@@ -142,12 +146,18 @@ class StudentCreateView(CreateView):
         name = App.decode_value(name)
         new_obj = site.create_user('student', name)
         site.students.append(new_obj)
+        new_obj.mark_new()
+        UnitOfWork.get_current().commit()
         logger.log(f'Создаем нового студента {name}')
 
 
 class StudentListView(ListView):
-    queryset = site.students
+    # queryset_1 = site.students
     template_name = 'student_list.html'
+
+    def get_queryset(self):
+        mapper = MapperRegistry.get_current_mapper('student')
+        return mapper.find_all()
 
 
 class AddStudentInCourseCreateView(CreateView):
@@ -156,7 +166,9 @@ class AddStudentInCourseCreateView(CreateView):
     def get_context_data(self):
         context = super().get_context_data()
         context['courses'] = site.courses
-        context['students'] = site.students
+        # context['students'] = site.students
+        mapper = MapperRegistry.get_current_mapper('student')
+        context['students'] = mapper.find_all()
         return context
 
     def create_obj(self, data: dict):
@@ -165,7 +177,11 @@ class AddStudentInCourseCreateView(CreateView):
         course = site.get_course(course_name)
         student_name = data['student_name']
         student_name = App.decode_value(student_name)
-        student = site.get_student(student_name)
+        mapper = MapperRegistry.get_current_mapper('student')
+        for item in mapper.find_all():
+            if item.name == student_name:
+                student = item
+        # student = site.get_student(student_name)
         logger.log(f'Студен {student.name} добавился на курс {course.name}')
         course.add_student(student)
 
